@@ -33,11 +33,22 @@ def test_store():
                                        '/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[1]/div[2]/div[1]/div/div[2]/ul/li[6]')
     print(f"store availability - '{choose_store.text}'")
     choose_store.click()
-    # driver.implicitly_wait(10)
     time.sleep(5)
-    driver.execute_script("window.scrollTo(0, 500)")
 
     assert "trts-mart" in driver.current_url
+
+
+def test_out_of_stock():
+    button = driver.find_element(By.XPATH,
+                                 'html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[1]/div[2]/div[2]/label')
+    button_text = driver.find_element(By.XPATH,
+                                      '/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[1]/div[2]/div[2]/span')
+    print(button_text.text)
+    button.click()
+    time.sleep(5)
+    driver.execute_script("window.scrollTo(0, 600)")
+
+    assert "in_stock=1" in driver.current_url
 
 
 def test_cost():
@@ -59,15 +70,27 @@ def test_cost():
     assert "cost_from=200000" in driver.current_url and "cost_to=500000" in driver.current_url
 
 
+def test_discounted():
+    discounted = driver.find_element(By.XPATH,
+                                     '/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[3]/div/div/label')
+    discounted_text = driver.find_element(By.XPATH,
+                                          '/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[3]/div/div/span')
+    print(discounted_text.text)
+    discounted.click()
+    time.sleep(5)
+
+    assert "discounted=1" in driver.current_url
+
+
 def test_brands():
     choose_brand_asus = driver.find_element(By.XPATH,
-                                            "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[4]/div[2]/div[3]/label/span/i")
+                                            "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[4]/div[2]/div[1]/label/span/i")
     print(f"choose ' {choose_brand_asus.text}", end=' & ')
     choose_brand_asus.click()
     time.sleep(5)
 
     choose_brand_lenovo = driver.find_element(By.XPATH,
-                                              "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[4]/div[2]/div[7]/label/span/i")
+                                              "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[4]/div[2]/div[4]/label/span/i")
     print(f"{choose_brand_lenovo.text}'")
     choose_brand_lenovo.click()
     time.sleep(5)
@@ -79,7 +102,7 @@ def test_brands():
 
 def test_laptop_class():
     choose_laptop_class = driver.find_element(By.XPATH,
-                                              "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[5]/div[2]/div[2]/label/span/i")
+                                              "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[5]/div[2]/div[1]/label/span/i")
     print(f"laptop class '{choose_laptop_class.text}'")
     choose_laptop_class.click()
     time.sleep(5)
@@ -89,18 +112,18 @@ def test_laptop_class():
 
 def test_processor_type():
     choose_processor_type = driver.find_element(By.XPATH,
-                                                "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[6]/div[2]/div[2]/label/span/i")
+                                                "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[6]/div[2]/div[3]/label/span/i")
     print(f"processor type '{choose_processor_type.text}'")
     choose_processor_type.click()
     time.sleep(5)
-    driver.execute_script("window.scrollTo(0, 1000)")
+    driver.execute_script("window.scrollTo(0, 1100)")
 
-    assert "ryzen-5" in driver.current_url
+    assert "core-i5" in driver.current_url
 
 
 def test_memory_type():
     choose_memory_type = driver.find_element(By.XPATH,
-                                             "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[7]/div[2]/div[2]/label/span/i")
+                                             "/html/body/div[3]/div[1]/main/div[2]/div[1]/div[3]/div[2]/div/div[2]/div[7]/div[2]/div[1]/label/span/i")
     print(f"main memory '{choose_memory_type.text}'")
     choose_memory_type.click()
     time.sleep(5)
