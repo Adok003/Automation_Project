@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 import time
-import pandas as pd
 
 driver = webdriver.Chrome()
 driver.get('https://evrika.com/')
