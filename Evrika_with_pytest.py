@@ -8,8 +8,21 @@ driver = webdriver.Chrome()
 driver.get('https://evrika.com/')
 driver.maximize_window()
 driver.implicitly_wait(10)
-driver.find_element(By.XPATH, '/html/body/div[4]/div/div[3]/button[1]').click()
-driver.implicitly_wait(10)
+
+
+def test_city():
+    city = driver.find_element(By.XPATH, '/html/body/div[4]/div/div[2]/div[1]/p/b').text
+    driver.find_element(By.XPATH, '/html/body/div[4]/div/div[3]/button[1]').click()
+    driver.implicitly_wait(10)
+
+    assert city == 'Алматы'
+
+
+def test_language():
+    language = driver.find_element(By.XPATH, '/html/body/div[3]/div[1]/div[1]/div/div/div[3]/div/div[1]/div/span').text
+    driver.implicitly_wait(10)
+
+    assert language == 'Рус'
 
 
 def test_category():
@@ -58,12 +71,12 @@ def test_cost():
     price = '200000'
     print(price, end=' - ')
     price_from.send_keys(Keys.CONTROL, 'a')
-    price_from.send_keys(price)
+    price_from.send_keys(price, Keys.TAB)
 
     price_to = driver.find_element(By.NAME, "cost_to")
     price = '500000'
     print(price, end=' tg \n')
-    price_to.send_keys(Keys.CONTROL, 'a')
+    # price_to.send_keys(Keys.CONTROL, 'a')
     price_to.send_keys('500000', Keys.ENTER)
     time.sleep(5)
 
@@ -143,6 +156,23 @@ def test_show_results():
     catalog = driver.find_elements(By.XPATH, '/html/body/div[3]/div[1]/main/div[2]/div[1]/div[4]/div[3]/div[1]/div/div')
 
     assert str(len(catalog)) == count_filtered_products.text
+
+
+def test_product():
+    driver.find_element(By.XPATH,
+                        '/html/body/div[3]/div[1]/main/div[2]/div[1]/div[4]/div[3]/div[1]/div[1]/div/div/div[3]/a').click()
+    processor_type = driver.find_element(By.XPATH,
+                                         '//*[@id="product-tabs"]/div[7]/div/div[2]/div/div[4]/div[2]/div[2]/div[2]').text
+    # print(processor_type)
+    class_laptop = driver.find_element(By.XPATH,
+                                       '//*[@id="product-tabs"]/div[7]/div/div[2]/div/div[12]/div[2]/div[1]/div[2]').text
+    # print(class_laptop)
+    brand = driver.find_element(By.XPATH,
+                                '//*[@id="product-tabs"]/div[7]/div/div[2]/div/div[12]/div[2]/div[12]/div[2]').text
+    # print(brand)
+
+    assert processor_type == 'Intel Core i5' and class_laptop == 'Для учебы и офиса' and brand == 'Asus'
+    driver.back()
 
 
 def test_reset_results():
